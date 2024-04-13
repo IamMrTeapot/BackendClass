@@ -16,7 +16,7 @@ dotenv.config({ path: "./config/config.env" });
 
 connectDB();
 
-const hospitals = require("./routes/hospitals");
+const dentists = require("./routes/dentists");
 const appointments = require("./routes/appointments");
 const auth = require("./routes/auth");
 
@@ -43,9 +43,9 @@ const swaggerOptions = {
   swaggerDefinition: {
     openapi: "3.0.0",
     info: {
-      title: "Library API",
+      title: "Dentist Booking API",
       version: "1.0.0",
-      description: "A simple Express VacQ API",
+      description: "A simple API for booking appointments with dentists",
     },
     servers: [
       {
@@ -59,7 +59,7 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
-app.use("/api/v1/hospitals", hospitals);
+app.use("/api/v1/dentists", dentists);
 app.use("/api/v1/appointments", appointments);
 app.use("/api/v1/auth", auth);
 
