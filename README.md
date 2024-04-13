@@ -1,0 +1,1 @@
+A term project for backend API development practice leveraging express and mongoose
