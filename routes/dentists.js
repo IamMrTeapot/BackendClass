@@ -83,6 +83,8 @@
  * /dentists:
  *   post:
  *     summary: Creates a new dentist
+ *     security:
+ *       - bearerAuth: []
  *     tags: [Dentists]
  *     requestBody:
  *       required: true
@@ -106,6 +108,8 @@
  * /dentists/{id}:
  *   put:
  *     summary: Update a dentist by ID
+ *     security:
+ *       - bearerAuth: []
  *     tags: [Dentists]
  *     parameters:
  *       - in: path
@@ -138,6 +142,8 @@
  * /dentists/{id}:
  *   delete:
  *     summary: Delete a dentist by ID
+ *     security:
+ *       - bearerAuth: []
  *     tags: [Dentists]
  *     parameters:
  *       - in: path
