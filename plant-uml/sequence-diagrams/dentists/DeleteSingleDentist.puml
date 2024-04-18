@@ -1,0 +1,38 @@
+@startuml Delete Single Dentist (DELETE)
+
+header Dentists API Sequence Diagram
+footer Page %page% of %lastpage%
+title "Delete Single Dentist (DELETE)"
+
+participant "Client" as client
+participant "<<javaScript>>\n:server" as server
+participant "<<router>>\n:dentists" as routerDentists
+participant "<<middleware>>\n:auth" as middlewareAuth
+participant "<<controllers>>\n:dentists" as controllersDentists
+participant "<<model>>\n:Dentist" as modelDentist
+database "<<MongoDB>>\n:dentists" as DentistsDatabase
+
+client->server ++:req.delete('/dentists/:id')
+server->routerDentists ++:app.use('/dentists',dentists)
+routerDentists -> middlewareAuth ++:protect()
+alt token
+    middlewareAuth -> routerDentists --:next()
+else !token || token == "null"
+    middlewareAuth -> client --:res.status(401).json({error: 'Not authorized to access this route'})
+end
+
+routerDentists -> middlewareAuth ++:authorize('admin')
+alt req.user.role === 'admin'
+    middlewareAuth -> routerDentists --:next()
+else req.user.role !== 'admin'
+    middlewareAuth -> client --:res.status(403).json({error: 'User role not authorized to access this route'})
+end
+
+routerDentists -> controllersDentists ++:deleteDentist(req.params.id)
+controllersDentists->modelDentist ++:findByIdAndDelete(req.params.id)
+modelDentist ->DentistsDatabase ++: DentistSchema
+DentistsDatabase --> modelDentist --: deletedDentist
+controllersDentists <-- modelDentist --:deletedDentist
+controllersDentists->client --:response
+
+@enduml
