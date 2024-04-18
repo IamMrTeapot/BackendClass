@@ -1,0 +1,49 @@
+@startuml Dentist System Use Case Diagram
+left to right direction
+actor "User" as user
+rectangle "Auth Service" as AuthService {    
+    usecase "Register" as register
+    usecase "Login" as login
+    usecase "View User\nInformation" as viewUser
+    usecase "Logout" as logout
+
+}
+
+rectangle "Dentist Service" as DentistService {    
+    usecase "Create\nDentist" as createDentist
+    usecase "View\nDentists" as viewDentists
+    usecase "Manage\nDentists" as manageDentists
+}
+
+rectangle "Appointment Service" as AppointmentService {    
+    usecase "Create\nAppointment" as createAppointment
+    usecase "View\nAppointments" as viewAppointments
+    usecase "Manage\nAppointments" as manageAppointments
+}
+
+user -- register
+user -- login
+user -- viewUser
+user -- logout
+
+user -- viewDentists
+
+user -- createAppointment
+user -- viewAppointments
+user -- manageAppointments
+
+actor "Admin" as admin
+register -- admin
+login -- admin
+viewUser -- admin
+logout -- admin
+
+createDentist -- admin
+viewDentists -- admin
+manageDentists -- admin
+
+createAppointment -- admin
+viewAppointments -- admin
+manageAppointments -- admin
+
+@enduml
