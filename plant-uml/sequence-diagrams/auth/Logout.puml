@@ -1,8 +1,8 @@
-@startuml Logout (POST)
+@startuml Logout (GET)
 
 header Authentication API Sequence Diagram
 footer Page %page% of %lastpage%
-title "Logout (POST)"
+title "Logout (GET)"
 
 participant "Client" as client
 participant "<<javaScript>>\n:server" as server
@@ -10,7 +10,7 @@ participant "<<router>>\n:auth" as routerAuth
 participant "<<middleware>>\n:auth" as middlewareAuth
 participant "<<controllers>>\n:auth" as controllersAuth
 
-client->server ++:req.post('/auth/logout')
+client->server ++:req.get('/auth/logout')
 server->routerAuth ++:app.use('/auth',auth)
 routerAuth -> controllersAuth ++:logout()
 controllersAuth->client --:response (set cookie token to null)

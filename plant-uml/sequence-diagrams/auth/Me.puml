@@ -21,7 +21,7 @@ else !token || token == "null"
     middlewareAuth -> client --:res.status(401).json({error: 'Not authorized to access this route'})
 end
 
-routerAuth -> controllersAuth ++:getMe(req.user.id)
+routerAuth -> controllersAuth ++:getMe()
 controllersAuth->modelUser ++:findById(req.user.id)
 modelUser ->UsersDatabase ++: UserSchema
 UsersDatabase --> modelUser --: user
