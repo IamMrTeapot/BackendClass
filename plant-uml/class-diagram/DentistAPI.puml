@@ -1,0 +1,67 @@
+@startuml DentistAPI
+left to right direction
+package "Dentist"{
+    class "<<Application>>\nDentistService" as DentistService{}
+
+    class "<<Resource>>\nDentists" as ResourceDentists{
+        <<GET>> +getDentists():Dentist[]
+        <<POST>> +createDentist():Dentist
+    }
+
+    class "<<Resource>>\nDentist" as ResourceDentist {
+        <<GET>> +getDentist(): Dentist
+        <<PUT>> +updateDentist(): Dentist
+        <<DELETE>> +deleteDentist(): void
+    }
+
+    class "<<Resource>>\nAppointments" as ResourceAppointments{
+        <<GET>> +getAppointments():Appointment[]
+        <<POST>> +createAppointment():Appointment
+    }
+
+    class "<<Resource>>\nAppointment" as ResourceAppointment {
+        <<GET>> +getAppointment(): Appointment
+        <<PUT>> +updateAppointment(): Appointment
+        <<DELETE>> +deleteAppointment(): void
+    }
+
+    class "<<Resource>>\nAuth" as ResourceAuth {
+        <<POST>> +login(): token
+        <<POST>> +register(): token
+        <<GET>> +me(): User
+        <<GET>> +logout(): void
+    }
+
+    class "<<Representation>>\nDentist" as RepresentationDentist {
+        -name
+        -years_of_experience
+        -area_of_expertise
+    }
+    class "<<Representation>>\nUser" as RepresentationUser {
+        -name
+        -telephone
+        -email
+        -role
+        -password
+        -createdAt
+    }
+    class "<<Representation>>\nAppointment" as RepresentationAppointment {
+        -appointmentDate
+        -user
+        -dentist
+        -createdAt
+    }
+
+}
+
+DentistService ..> ResourceDentists:"/dentists\n<<Path>>"
+ResourceDentists ..> ResourceDentist: "/{dentistId}\n<<Path>>"
+ResourceDentist ..> RepresentationDentist: "<<use>>"
+ResourceDentist ..> ResourceAppointments: "/appointments\n<<Path>>"
+DentistService ..> ResourceAuth: "/auth\n<<Path>>"
+ResourceAuth ..> RepresentationUser: "<<use>>"
+DentistService ..> ResourceAppointments: "/appointments\n<<Path>>"
+ResourceAppointments ..> ResourceAppointment: "/{appointmentId}\n<<Path>>"
+ResourceAppointment ..> RepresentationAppointment: "<<use>>"
+
+@enduml
