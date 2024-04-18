@@ -28,7 +28,7 @@ else req.user.role !== 'admin'
     middlewareAuth -> client --:res.status(403).json({error: 'User role not authorized to access this route'})
 end
 
-routerDentists -> controllersDentists ++:createDentist(req.body)
+routerDentists -> controllersDentists ++:createDentist()
 controllersDentists->modelDentist ++:create(req.body)
 modelDentist ->DentistsDatabase ++: DentistSchema
 DentistsDatabase --> modelDentist --: dentist
