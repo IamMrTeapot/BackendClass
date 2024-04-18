@@ -62,7 +62,7 @@
 
 /**
  * @swagger
- * /dentists/:dentistId/appointments/{id}:
+ * /appointments/{id}:
  *   get:
  *     summary: Get the appointment by id
  *     tags: [Appointments]
@@ -86,7 +86,7 @@
 
 /**
  * @swagger
- * /dentists/:dentistId/appointments:
+ * /appointments:
  *   post:
  *     summary: Creates a new appointment
  *     security:
@@ -111,7 +111,7 @@
 
 /**
  * @swagger
- * /dentists/:dentistId/appointments/{id}:
+ * /appointments/{id}:
  *   put:
  *     summary: Update a appointment by ID
  *     security:
@@ -145,7 +145,7 @@
 
 /**
  * @swagger
- * /dentists/:dentistId/appointments/{id}:
+ * /appointments/{id}:
  *   delete:
  *     summary: Delete a appointment by ID
  *     security:
