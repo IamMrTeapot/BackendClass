@@ -21,6 +21,10 @@ rectangle "Appointment Service" as AppointmentService {
     usecase "Manage\nAppointments" as manageAppointments
 }
 
+rectangle "Report Service" as ReportService {    
+    usecase "View\nReport" as viewReport
+}
+
 user -- register
 user -- login
 user -- viewUser
@@ -45,5 +49,7 @@ manageDentists -- admin
 createAppointment -- admin
 viewAppointments -- admin
 manageAppointments -- admin
+
+admin -- viewReport
 
 @enduml
