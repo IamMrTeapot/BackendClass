@@ -74,10 +74,10 @@ exports.addAppointment = async (req, res, next) => {
 
     const existedAppointment = await Appointment.find({ user: req.user.id });
 
-    if (existedAppointment.length >= 3 && req.user.role !== "admin") {
+    if (existedAppointment.length >= 1 && req.user.role !== "admin") {
       return res.status(400).json({
         success: false,
-        message: `The user with ID ${req.user.id} already made 3 appointments.`,
+        message: `The user with ID ${req.user.id} already made an appointment.`,
       });
     }
 
