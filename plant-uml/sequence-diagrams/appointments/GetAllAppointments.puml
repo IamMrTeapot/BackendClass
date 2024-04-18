@@ -1,0 +1,23 @@
+@startuml GET All Appointments (GET)
+
+header Appointments API Sequence Diagram
+footer Page %page% of %lastpage%
+title "GET All Appointments (GET)"
+
+participant "Client" as client
+participant "<<javaScript>>\n:server" as server
+participant "<<router>>\n:appointments" as routerAppointments
+participant "<<controllers>>\n:appointments" as controllersAppointments
+participant "<<model>>\n:Appointment" as modelAppointment
+database "<<MongoDB>>\n:appointments" as AppointmentsDatabase
+
+client->server ++:req.get('/appointments')
+server->routerAppointments ++:app.use('/appointments',appointments)
+routerAppointments -> controllersAppointments ++:getAllAppointments()
+controllersAppointments->modelAppointment ++:find()
+modelAppointment ->AppointmentsDatabase ++: AppointmentSchema
+AppointmentsDatabase --> modelAppointment --: appointments
+controllersAppointments <-- modelAppointment --:appointments
+controllersAppointments->client --:response
+
+@enduml
