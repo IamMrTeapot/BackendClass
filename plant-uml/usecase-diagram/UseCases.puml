@@ -36,6 +36,8 @@ user -- createAppointment
 user -- viewAppointments
 user -- manageAppointments
 
+user -- viewReport
+
 actor "Admin" as admin
 register -- admin
 login -- admin
@@ -50,6 +52,6 @@ createAppointment -- admin
 viewAppointments -- admin
 manageAppointments -- admin
 
-admin -- viewReport
+viewReport -- admin
 
 @enduml
