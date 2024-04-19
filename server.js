@@ -19,6 +19,7 @@ connectDB();
 const dentists = require("./routes/dentists");
 const appointments = require("./routes/appointments");
 const auth = require("./routes/auth");
+const reports = require("./routes/reports");
 
 const app = express();
 
@@ -49,7 +50,7 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: "http://localhost:5000/api/v1",
+        url: "http://localhost:3000/api/v1",
       },
     ],
   },
@@ -62,6 +63,7 @@ app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 app.use("/api/v1/dentists", dentists);
 app.use("/api/v1/appointments", appointments);
 app.use("/api/v1/auth", auth);
+app.use("/api/v1/reports", reports);
 
 const PORT = process.env.PORT || 5000;
 
