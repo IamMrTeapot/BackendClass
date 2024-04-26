@@ -1,19 +1,21 @@
-@startuml POST Single Appointment (POST)
+@startuml POST Dentist New Appointment (POST)
 
 header Appointments API Sequence Diagram
 footer Page %page% of %lastpage%
-title "POST Single Appointment (POST)"
+title "POST Dentist New Appointment (POST)"
 
 participant "Client" as client
 participant "<<javaScript>>\n:server" as server
+participant "<<router>>\n:dentists" as routerDentists
 participant "<<router>>\n:appointments" as routerAppointments
 participant "<<middleware>>\n:auth" as middlewareAuth
 participant "<<controllers>>\n:appointments" as controllersAppointments
 participant "<<model>>\n:Appointment" as modelAppointment
 database "<<MongoDB>>\n:appointments" as AppointmentsDatabase
 
-client->server ++:req.post('/appointments')
-server->routerAppointments ++:app.use('/appointments',appointments)
+client->server ++:req.post('/dentists/:dentistId/appointments', appointmentDetails)
+server->routerDentists ++:app.use('/dentists',dentists)
+routerDentists->routerAppointments ++:app.use('/:dentistId/appointments',appointments)
 routerAppointments -> middlewareAuth ++:protect()
 alt token
     middlewareAuth -> routerAppointments --:next()
@@ -27,10 +29,10 @@ else req.user.role !== 'admin' && req.user.role !== 'user'
     middlewareAuth -> client --:res.status(403).json({error: 'User role not authorized to access this route'})
 end
 routerAppointments -> controllersAppointments ++:createAppointment()
-controllersAppointments->modelAppointment ++:create(req.body)
+controllersAppointments->modelAppointment ++:create({ dentist: req.params.dentistId, ...req.body })
 modelAppointment ->AppointmentsDatabase ++: AppointmentSchema
-AppointmentsDatabase --> modelAppointment --: appointment
-controllersAppointments <-- modelAppointment --:appointment
+AppointmentsDatabase --> modelAppointment --: newAppointment
+controllersAppointments <-- modelAppointment --:newAppointment
 controllersAppointments->client --:response
 
 @enduml

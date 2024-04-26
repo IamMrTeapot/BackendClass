@@ -1,8 +1,16 @@
 /**
  * @swagger
+ * tags:
+ *   name: Reports
+ *   description: The download reports as CSV API
+ */
+
+/**
+ * @swagger
  * /reports:
  *   get:
  *     summary: Get all reports
+ *     tags: [Reports]
  *     description: Get all reports
  *     responses:
  *       200:
